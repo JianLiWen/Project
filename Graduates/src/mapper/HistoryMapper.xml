@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.HistoryMapper">
+   <resultMap type="com.wjl.graduate.pojo.History" id="history">
+     <id property="id" column="id"/>
+    <result property="student_id" column="student_id"/>
+     <result property="direction" column="direction"/>
+     <result property="company" column="company"/>
+     <result property="place" column="place"/>
+      <result property="time" column="time"/>
+       <result property="ismajor" column="ismajor"/>
+   </resultMap>
+
+      <insert id="add" parameterType="history">
+           insert into history 
+           (student_id,direction,company,place,time,ismajor) values
+           (#{student_id},#{direction},#{company},#{place},#{time},#{ismajor})
+      </insert>
+      <select id="findhistory" resultMap="history">
+          select *  from   history   where  student_id = #{student_id}
+      </select>
+      <select id="findplaceByyear"  parameterType="String" resultType="String">
+        select  DISTINCT place FROM
+        (select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+         where  history.student_id=student.id   and 
+         time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%'  ) and
+          student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+         GROUP BY s.student_id  
+      </select>
+       <select id="countplaceByyear" parameterType="String" resultType="int">
+			select COUNT(place) from 
+			(select  place FROM
+			(select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+			where  history.student_id=student.id   and 
+			 time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%') and
+			 student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+			GROUP BY s.student_id
+			) p  WHERE p.place=#{place}
+      </select>
+       <select id="counttotal"  parameterType="String" resultType="int">
+		 select COUNT(*) from 
+		(select  place FROM
+		(select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+		where  history.student_id=student.id   and 
+		 time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%') and
+		 student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+		GROUP BY s.student_id
+		) p  
+    </select>
+    <select id="finddirectionByyear"  parameterType="String" resultType="String">
+       select  DISTINCT direction FROM
+        (select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+         where  history.student_id=student.id   and 
+         time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%'  ) and
+          student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+         GROUP BY s.student_id  
+    </select>
+        <select id="finddirectionBytype"  parameterType="String" resultType="String">
+		  select DISTINCT a.direction  from
+		(select  * FROM
+		  (select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+		  where  history.student_id=student.id   and 
+		  time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%'  )
+		 and  student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+		 GROUP BY s.student_id  ) a,direction  d
+		where a.direction=d.direction  and  d.type=#{type}
+		</select>
+     <select id="countdirectionByyear" parameterType="String" resultType="int">
+			select COUNT(direction) from 
+			(select  direction FROM
+			(select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+			where  history.student_id=student.id   and 
+			 time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%') and
+			 student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+			GROUP BY s.student_id
+			) p  WHERE p.direction=#{direction}
+      </select>
+       <select id="countmajorByyear"  parameterType="String" resultType="int">
+			       select count(*)  from
+			(select * FROM
+			(select  history.id,student_id,direction,company,place,time,history.ismajor from  history,student  
+			where  history.student_id=student.id   and 
+			 time  BETWEEN   leave_time  AND (select  DISTINCT DATE_ADD(leave_time,INTERVAL #{number} year)  as count_time from student where classid LIKE '${student_id}%') and
+			 student_id LIKE '${student_id}%'  ORDER BY time DESC limit 10000000000) s
+			GROUP BY s.student_id
+			) p  where p.ismajor=#{ismajor}
+    </select>
+    
+     <select id="TimeDiff" parameterType="String"  resultType="int">
+       select  TIMESTAMPDIFF(year,
+      (select  DISTINCT leave_time from student where classid LIKE '${student_id}%'),CURDATE())
+    </select>
+</mapper>

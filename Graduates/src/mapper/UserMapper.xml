@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.UserMapper">
+   <resultMap type="com.wjl.graduate.pojo.User" id="user">
+     <id property="id" column="id"/>
+     <result property="username" column="username"/>
+     <result property="password" column="password"/>
+     <result property="status"   column="status"/>
+     <result property="logincount" column="logincount"/> 
+   </resultMap>
+      <select id="findByName" parameterType="string" resultMap="user">
+        select * from user  where username = #{username}
+      </select>
+      <delete id="deleteuser" parameterType="int">
+         delete  from  user where  id=#{id}
+      </delete>
+      <update id="updatepawd" parameterType="String">
+         update  user
+         set  password=#{password}
+         where username=#{username}
+      </update>
+      <update id="logincount" parameterType="String">
+          update  user  set  logincount = logincount+1
+          where  username=#{username}
+      </update>	
+      <insert id="addgraduates" parameterType="user">
+          insert into user (username,password,status,logincount)
+          values (#{username},#{password},1,0)
+      </insert>
+</mapper>

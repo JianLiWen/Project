@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.StudentMapper">
+   <resultMap type="com.wjl.graduate.pojo.Student" id="student">
+     <id property="id" column="id"/>
+     <result property="name" column="name"/>
+     <result property="sex" column="sex"/>
+     <result property="birthdate"   column="birthdate"/>
+     <result property="classid" column="classid"/>
+      <result property="leave_time" column="leave_time"/>
+     <result property="birthplace" column="birthplace"/>
+     <result property="phone" column="phone"/>
+     <result property="del_flg" column="del_flg"/>
+     <result property="job_direction" column="job_direction"/>
+    <result property="job_company" column="job_company"/>
+     <result property="job_place" column="job_place"/>
+      <result property="job_time" column="job_time"/>
+       <result property="ismajor" column="ismajor"/>
+        <result property="email" column="email"/>
+         <result property="address" column="address"/>
+   </resultMap>
+      <select id="findStudent"  resultMap="student">
+        select * from student where del_flg=0
+      </select>
+      <select id="findStudentById" parameterType="string" resultMap="student">
+         select *  from  student  where id=#{id} and del_flg=0
+      </select>
+      <select id="findStudentByclassId" parameterType="string" resultMap="student">
+         select *  from  student  where classid=#{classid} and del_flg=0
+      </select>
+     <update id="updateStudentById" parameterType="student" >
+          update  student
+          set  name = #{name}, sex = #{sex},classid= #{classid},
+          <if test="leave_time!=null" >leave_time=#{leave_time},</if>birthdate = #{birthdate},birthplace = #{birthplace},phone = #{phone},
+          email=#{email},address=#{address},job_direction=#{job_direction},job_company=#{job_company},job_place=#{job_place},job_time=#{job_time},ismajor=#{ismajor} 
+          where  id = #{id}
+      </update> 
+       <update id="finishinfoById"  parameterType="student">
+          update  student
+          <set>
+          <if test="email!=null">
+           email=#{email},
+           </if>
+           <if test="address!=null">
+           address=#{address},
+           </if>
+           <if test="job_direction!=null">
+           job_direction=#{job_direction},
+           </if>
+            <if test="job_company!=null">
+           job_company=#{job_company},
+            </if>
+            <if test="job_place!=null">
+             job_place=#{job_place},
+            </if>
+            <if test="job_time!=null">
+             job_time=#{job_time},
+            </if>
+            <if test="ismajor!=null">
+            ismajor=#{ismajor}
+             </if>
+            </set>
+              where  id = #{id}   
+      </update> 
+       <insert id="addStudent" parameterType="student">
+           insert into student 
+           (id,name,sex,classid,leave_time,birthdate,birthplace,phone,del_flg) values
+           (#{id},#{name},#{sex},#{classid},#{leave_time},#{birthdate},#{birthplace},#{phone},0)
+      </insert>
+   <update id="deleteStudent" parameterType="java.lang.String">
+     update student
+     set del_flg=1 
+     where 
+     id=#{id}
+     </update>
+    <select id="findplace" resultType="java.lang.String">
+         select DISTINCT   job_place from student   where job_place is not null and  job_place !=''
+    </select>
+    <select id="findplaceByclass" parameterType="String" resultType="java.lang.String" >
+         select DISTINCT   job_place from student  where classid=#{classid}
+    </select>
+    <select id="countplace" parameterType="java.lang.String" resultType="int">
+        select COUNT(job_place) from student  WHERE  job_place=#{job_place}
+    </select>
+    <select id="countplaceByclass" parameterType="java.lang.String" resultType="int">
+        select COUNT(job_place) from student  WHERE  job_place=#{job_place} and classid=#{classid}
+    </select>
+    <select id="counttotal" resultType="int">
+        select COUNT(*) from student  where  del_flg = 0
+    </select>
+  
+    <select id="finddirection" resultType="String">
+        select DISTINCT job_direction from student where job_direction is not null
+    </select>
+     <select id="finddirectionByclass" resultType="String" parameterType="String">
+        select DISTINCT job_direction from student  where classid=#{classid}
+    </select>
+    <select id="finddirectionBytype" parameterType="java.lang.String" resultType="String" >
+        select DISTINCT job_direction from student s,direction d where s.job_direction = d.direction  and type=#{type}
+    </select>   
+    <select id="countdirection" parameterType="java.lang.String" resultType="int" >
+        select count(job_direction)  from student where job_direction = #{job_direction}
+    </select>
+    <select id="countdirectionByclass" parameterType="java.lang.String" resultType="int" >
+        select count(job_direction)  from student where job_direction = #{job_direction} and classid=#{classid}
+    </select>
+    <select id="selectType" resultType="String" >
+        select DISTINCT type  from direction
+    </select>
+    <select id="selectdirection" resultType="String" >
+        select  direction  from direction
+    </select>
+    <select id="selectmajor"  resultType="String" >
+        select DISTINCT ismajor  from student  
+    </select>
+    <select id="selectmajorByclass" parameterType="String" resultType="String" >
+        select DISTINCT ismajor  from student where  classid = #{classid}
+    </select>
+     <select id="countmajor" parameterType="java.lang.String" resultType="int" >
+        select count(ismajor)  from student  where  ismajor=#{ismajor} 
+    </select>
+    <select id="countmajorByclass" parameterType="java.lang.String" resultType="int" >
+        select count(ismajor)  from student  where  ismajor=#{ismajor} and    classid = #{classid}
+    </select>
+    <select id="selectplace" resultType="String" >
+    select province from place
+    </select>
+   
+</mapper>

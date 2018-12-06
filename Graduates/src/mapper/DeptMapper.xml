@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.DeptMapper">
+   <resultMap type="com.wjl.graduate.pojo.Dept" id="dept">
+     <id property="id" column="id"/>
+     <result property="dept" column="dept"/>
+     <result property="classcount" column="classcount"/>
+     <result property="description"   column="description"/>
+   </resultMap>
+      <select id="findDept"  resultMap="dept">
+        select * from dept  
+      </select>
+      <select id="findDeptById" parameterType="Integer" resultMap="dept">
+         select *  from  dept where id=#{id}
+      </select>
+     <update id="updateDeptById" parameterType="dept" >
+          update  dept 
+          set  dept = #{dept,jdbcType=VARCHAR}, classcount = #{classcount,jdbcType=INTEGER},description = #{description,jdbcType=VARCHAR}
+          where  id = #{id}
+      </update> 
+      <insert id="addDept" parameterType="dept">
+           insert into dept 
+           (dept,classcount,description) values
+           (#{dept},#{classcount},#{description})
+      </insert>
+</mapper>

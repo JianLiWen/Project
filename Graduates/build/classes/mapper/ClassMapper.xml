@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.ClassMapper">
+   <resultMap type="com.wjl.graduate.pojo.Classes" id="classes">
+     <id property="classId" column="classId"/>
+     <result property="number" column="number"/>
+     <result property="teacher" column="teacher"/>
+     <result property="major"   column="major"/>
+     <result property="del_flg" column="del_flg"/>
+   </resultMap>
+      <select id="findClass"  resultMap="classes">
+        select * from class  where del_flg=0
+      </select>
+      <select id="findClassById" parameterType="string" resultMap="classes">
+         select *  from  class where classId=#{classId} and del_flg=0
+      </select>
+     <update id="updateClassById" parameterType="classes" >
+          update  class 
+          set  number = #{number}, teacher = #{teacher},major= #{major}
+          where  classId = #{classId}
+      </update> 
+      <insert id="addClass" parameterType="classes">
+           insert into class 
+           (classId,number,teacher,major,del_flg) values
+           (#{classId},#{number},#{teacher},#{major},0)
+      </insert>
+     <update id="deleteClass" parameterType="java.lang.String">
+     update class
+     set del_flg=1 
+     where 
+     classId=#{classId}
+     </update>
+     <select id="counttotal" resultType="Integer">
+        select count(*) from class where del_flg=0
+     </select>
+</mapper>

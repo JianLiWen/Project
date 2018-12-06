@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.BoardMapper">
+   <resultMap type="com.wjl.graduate.pojo.Board" id="board">
+     <id property="id" column="id"/>
+     <result property="title" column="title"/>
+     <result property="create_time" column="create_time"/>
+     <result property="author"   column="author"/>
+     <result property="content"   column="content"/>
+     <result property="type"   column="type"/>
+     <result property="flag"   column="flag"/>
+   
+   </resultMap>
+      <select id="queryboard"  resultMap="board">
+        select * from board 
+      </select>
+      <select id="findBoardById" parameterType="Integer" resultMap="board">
+         select *  from  board where id=#{id}
+      </select>
+       <select id="findBoardBytype" parameterType="Integer" resultMap="board">
+         select *  from  board where type=#{type}  
+      </select>
+      <select id="findsomeBoard" parameterType="Integer" resultMap="board">
+         SELECT * from board where type=#{type}  ORDER BY create_time  DESC LIMIT 5
+      </select>
+       <insert id="addboard" parameterType="board">
+          insert into board (title,create_time,author,content,type) values
+          (#{title}, now(),#{author},#{content},#{type})
+       </insert>
+       
+      <select id="findSomeBoardBytype" parameterType="Integer" resultMap="board">
+         select *  from  board where type=#{type} limit #{offset},#{pagesize} 
+      </select>
+       <select id="counttotal" resultType="Integer">
+       select  count(*) from board
+       </select>
+ 
+        <update id="updateBoardById" parameterType="board" >
+          update  board
+          set  title = #{title}, author = #{author},content = #{content},
+          type=#{type}
+          where  id = #{id}
+       </update> 
+       <delete id="deleteboard" parameterType="int">
+           delete from board where id=#{id}
+       </delete>
+</mapper>

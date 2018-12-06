@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wjl.graduate.dao.MessageMapper">
+   <resultMap type="com.wjl.graduate.pojo.Message" id="message">
+     <id property="id" column="id"/>
+     <result property="sname" column="sname"/>
+     <result property="create_time" column="create_time"/>
+     <result property="author"   column="author"/>
+     <result property="content" column="content"/>
+     <result property="review" column="review"/>
+      <result property="review_time" column="review_time"/>
+   </resultMap>
+      <insert id="addmessage" parameterType="message">
+           insert into message 
+           (sname,create_time,author,content) values
+           (#{sname},now(),#{author},#{content})
+      </insert>
+     <select id="findmessage"  parameterType="String"  resultMap="message">
+      select  * from   message  where  sname = #{sname}
+     </select>
+     <select id="findreview"  parameterType="Integer"  resultMap="message">
+      select  * from   message  where  id= #{id}
+     </select>
+     <select id="mymessage"  parameterType="String"  resultMap="message">
+       select * from message where   author = #{author} and (review is not null or trim(review)!=''  )
+     </select>
+     <update id="review" parameterType="message" >
+          update  message 
+          set review=#{review},review_time=now()
+          where  id = #{id} 
+     </update>
+</mapper>
