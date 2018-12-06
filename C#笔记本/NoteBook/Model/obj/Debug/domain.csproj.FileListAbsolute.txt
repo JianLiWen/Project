@@ -1,0 +1,9 @@
+G:\C#\NoteBook\Model\bin\Debug\Model.dll
+G:\C#\NoteBook\Model\bin\Debug\Model.pdb
+G:\C#\NoteBook\Model\obj\Debug\Model.dll
+G:\C#\NoteBook\Model\obj\Debug\Model.pdb
+E:\C#\文建丽C#笔记本\NoteBook\Model\bin\Debug\Model.dll
+E:\C#\文建丽C#笔记本\NoteBook\Model\bin\Debug\Model.pdb
+E:\C#\文建丽C#笔记本\NoteBook\Model\obj\Debug\Model.dll
+E:\C#\文建丽C#笔记本\NoteBook\Model\obj\Debug\Model.pdb
+E:\C#\文建丽C#笔记本\NoteBook\Model\obj\Debug\domain.csprojResolveAssemblyReference.cache

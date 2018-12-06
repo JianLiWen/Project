@@ -1,0 +1,5 @@
+G:\C#\NoteBook\Model\bin\Debug\Model.dll
+G:\C#\NoteBook\Model\bin\Debug\Model.pdb
+G:\C#\NoteBook\Model\obj\Debug\Model.dll
+G:\C#\NoteBook\Model\obj\Debug\Model.pdb
+G:\C#\NoteBook\Model\obj\Debug\Model.csprojResolveAssemblyReference.cache

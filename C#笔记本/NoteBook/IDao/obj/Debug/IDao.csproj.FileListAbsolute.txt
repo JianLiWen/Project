@@ -1,0 +1,14 @@
+G:\C#\NoteBook\IDao\bin\Debug\IDao.dll
+G:\C#\NoteBook\IDao\bin\Debug\IDao.pdb
+G:\C#\NoteBook\IDao\obj\Debug\IDao.dll
+G:\C#\NoteBook\IDao\obj\Debug\IDao.pdb
+G:\C#\NoteBook\IDao\bin\Debug\Model.dll
+G:\C#\NoteBook\IDao\bin\Debug\Model.pdb
+G:\C#\NoteBook\IDao\obj\Debug\IDao.csprojResolveAssemblyReference.cache
+E:\C#\文建丽C#笔记本\NoteBook\IDao\bin\Debug\IDao.dll
+E:\C#\文建丽C#笔记本\NoteBook\IDao\bin\Debug\IDao.pdb
+E:\C#\文建丽C#笔记本\NoteBook\IDao\bin\Debug\Model.dll
+E:\C#\文建丽C#笔记本\NoteBook\IDao\bin\Debug\Model.pdb
+E:\C#\文建丽C#笔记本\NoteBook\IDao\obj\Debug\IDao.csprojResolveAssemblyReference.cache
+E:\C#\文建丽C#笔记本\NoteBook\IDao\obj\Debug\IDao.dll
+E:\C#\文建丽C#笔记本\NoteBook\IDao\obj\Debug\IDao.pdb

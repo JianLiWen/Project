@@ -1,0 +1,4 @@
+G:\C#\NoteBook\IService\bin\Debug\IService.dll
+G:\C#\NoteBook\IService\bin\Debug\IService.pdb
+G:\C#\NoteBook\IService\obj\Debug\IService.dll
+G:\C#\NoteBook\IService\obj\Debug\IService.pdb
